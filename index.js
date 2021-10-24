@@ -20,8 +20,8 @@ for (let i = 0; i < SQUARES_NUMBER; i += 1) {
   const square = document.createElement('div');
   square.classList.add('square');
 
-  square.addEventListener('mouseover', () => setColor(square)); // красит квадратики по наведению мышки
-
+  square.addEventListener('mouseover', setColor); // красит квадратики по наведению мышки
+  // (*) square.addEventListener('mouseover', ()=>setColor(square));
   square.addEventListener('mouseleave', () => removeColor(square)); //сбрасывает цвет квадратиков
 
   square.addEventListener('dblclick', () => changeColor(square)); // красит элемент в другой цвет по двойному клику
@@ -30,12 +30,21 @@ for (let i = 0; i < SQUARES_NUMBER; i += 1) {
 }
 
 // стилизирует элементы
-const setColor = function (el) {
+
+// альтернатива функции ниже при использовании записи (*) function setColor(el) {
+//   const color = getRandomColor();
+
+//   el.style.backgroundColor = color;
+//   el.style.boxShadow = `0 0 2px ${color}, 0 0 10px ${color}`;
+// }
+
+function setColor(e) {
+  const el = e.target;
   const color = getRandomColor();
 
   el.style.backgroundColor = color;
   el.style.boxShadow = `0 0 2px ${color}, 0 0 10px ${color}`;
-};
+}
 
 // возвращает стили по умолчанию
 const removeColor = function (el) {
@@ -48,7 +57,8 @@ function changeColor(el) {
 }
 
 function getRandomColor() {
-  const index = Math.floor(Math.random() * colors.length); //генерит рандомный индекс (рандомное число умножает на длину массива, затем округляется)
+  return colors[Math.floor(Math.random() * colors.length)];
 
-  return colors[index];
+  //   const index = Math.floor(Math.random() * colors.length); //генерит рандомный индекс (рандомное число умножает на длину массива, затем округляется)
+  //   return colors[index];
 }
